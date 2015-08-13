@@ -43,10 +43,34 @@ function startup_reloaded_portfolio() {
 		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
-		'capability_type'     => 'page'
+        'capability_type'     => array('portfolio_item','portfolio_items'),
+        'map_meta_cap'        => true
 	);
 	register_post_type( 'portfolio', $args );
 
 }
 add_action( 'init', 'startup_reloaded_portfolio', 0 );
+
+// Capabilities
+
+register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
+
+function startup_reloaded_portfolio_caps() {
+	
+	$role_admin = get_role( 'administrator' );
+	
+	$role_admin->add_cap( 'edit_portfolio_item' );
+	$role_admin->add_cap( 'read_portfolio_item' );
+	$role_admin->add_cap( 'delete_portfolio_item' );
+	$role_admin->add_cap( 'edit_others_portfolio_items' );
+	$role_admin->add_cap( 'publish_portfolio_items' );
+	$role_admin->add_cap( 'edit_portfolio_items' );
+	$role_admin->add_cap( 'read_private_portfolio_items' );
+	$role_admin->add_cap( 'delete_portfolio_items' );
+	$role_admin->add_cap( 'delete_private_portfolio_items' );
+	$role_admin->add_cap( 'delete_published_portfolio_items' );
+	$role_admin->add_cap( 'delete_others_portfolio_items' );
+	$role_admin->add_cap( 'edit_private_portfolio_items' );
+	$role_admin->add_cap( 'edit_published_portfolio_items' );
+}
 ?>
