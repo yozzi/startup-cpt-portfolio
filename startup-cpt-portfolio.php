@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: StartUp Portfolio Custom Post
-Description: Le plugin pour lactiver le Custom Post Portfolio
+Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
 Version: 0.1 alpha
 */
