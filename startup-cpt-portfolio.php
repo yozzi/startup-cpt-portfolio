@@ -8,7 +8,6 @@ Version: 0.1 alpha
 
 //CPT
 function startup_reloaded_portfolio() {
-
 	$labels = array(
 		'name'                => _x( 'Portfolio items', 'Post Type General Name', 'text_domain' ),
 		'singular_name'       => _x( 'Portfolio item', 'Post Type Singular Name', 'text_domain' ),
@@ -49,16 +48,13 @@ function startup_reloaded_portfolio() {
 	register_post_type( 'portfolio', $args );
 
 }
+
 add_action( 'init', 'startup_reloaded_portfolio', 0 );
 
 // Capabilities
 
-register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
-
 function startup_reloaded_portfolio_caps() {
-	
 	$role_admin = get_role( 'administrator' );
-	
 	$role_admin->add_cap( 'edit_portfolio_item' );
 	$role_admin->add_cap( 'read_portfolio_item' );
 	$role_admin->add_cap( 'delete_portfolio_item' );
@@ -73,4 +69,6 @@ function startup_reloaded_portfolio_caps() {
 	$role_admin->add_cap( 'edit_private_portfolio_items' );
 	$role_admin->add_cap( 'edit_published_portfolio_items' );
 }
+
+register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
 ?>
