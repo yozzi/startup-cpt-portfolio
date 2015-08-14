@@ -30,7 +30,7 @@ function startup_reloaded_portfolio() {
 		'label'               => __( 'portfolio', 'text_domain' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'comments', 'trackbacks', 'revisions', 'post-formats' ),
-		'taxonomies'          => array( 'category', 'post_tag' ),
+		//'taxonomies'          => array( 'category', 'post_tag' ),
 		'hierarchical'        => true,
 		'public'              => true,
 		'show_ui'             => true,
