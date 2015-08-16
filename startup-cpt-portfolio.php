@@ -37,7 +37,7 @@ function startup_reloaded_portfolio() {
 		'menu_position'       => 5,
 		'menu_icon'           => 'dashicons-art',
 		'show_in_admin_bar'   => false,
-		'show_in_nav_menus'   => false,
+		'show_in_nav_menus'   => true,
 		'can_export'          => true,
 		'has_archive'         => true,
 		'exclude_from_search' => false,
