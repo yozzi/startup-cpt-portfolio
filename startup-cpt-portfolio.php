@@ -1,10 +1,34 @@
 <?php
 /*
-Plugin Name: StartUp Portfolio Custom Post Type
+Plugin Name: StartUp Portfolio
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
-Version: 0.2.0
+Version: 0.3.0
 */
+
+//GitHub Plugin Updater
+function startup_reloaded_portfolio_updater() {
+	include_once 'lib/updater.php';
+	define( 'WP_GITHUB_FORCE_UPDATE', true );
+	if ( is_admin() ) {
+		$config = array(
+			'slug' => plugin_basename( __FILE__ ),
+			'proper_folder_name' => 'startup-cpt-portfolio',
+			'api_url' => 'https://api.github.com/repos/yozzi/startup-cpt-portfolio',
+			'raw_url' => 'https://raw.github.com/yozzi/startup-cpt-portfolio/master',
+			'github_url' => 'https://github.com/yozzi/startup-cpt-portfolio',
+			'zip_url' => 'https://github.com/yozzi/startup-cpt-portfolio/archive/master.zip',
+			'sslverify' => true,
+			'requires' => '3.0',
+			'tested' => '3.3',
+			'readme' => 'README.md',
+			'access_token' => '',
+		);
+		new WP_GitHub_Updater( $config );
+	}
+}
+
+add_action( 'init', 'startup_reloaded_portfolio_updater' );
 
 //CPT
 function startup_reloaded_portfolio() {
