@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: StartUp Portfolio Custom Post
+Plugin Name: StartUp Portfolio Custom Post Type
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
-Version: 0.1.0
+Version: 0.2.0
 */
 
 //CPT
