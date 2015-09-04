@@ -3,7 +3,7 @@
 Plugin Name: StartUp Portfolio
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
-Version: 0.4.0
+Version: 0.5.0
 */
 
 //Charger traduction
@@ -59,7 +59,7 @@ function startup_reloaded_portfolio() {
 	$args = array(
 		'label'               => __( 'portfolio', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'comments', 'trackbacks', 'revisions', 'post-formats' ),
+		'supports'            => array( 'title', 'revisions' ),
 		//'taxonomies'          => array( 'category', 'post_tag' ),
 		'hierarchical'        => true,
 		'public'              => true,
@@ -106,23 +106,23 @@ register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
 // Portfolio taxonomy
 function startup_reloaded_portfolio_categories() {
 	$labels = array(
-		'name'                       => _x( 'Portfolio Categories', 'Taxonomy General Name', 'startup-reloaded-products' ),
-		'singular_name'              => _x( 'Portfolio Category', 'Taxonomy Singular Name', 'startup-reloaded-products' ),
-		'menu_name'                  => __( 'Portfolio Categories', 'startup-reloaded-products' ),
-		'all_items'                  => __( 'All Items', 'startup-reloaded-products' ),
-		'parent_item'                => __( 'Parent Item', 'startup-reloaded-products' ),
-		'parent_item_colon'          => __( 'Parent Item:', 'startup-reloaded-products' ),
-		'new_item_name'              => __( 'New Item Name', 'startup-reloaded-products' ),
-		'add_new_item'               => __( 'Add New Item', 'startup-reloaded-products' ),
-		'edit_item'                  => __( 'Edit Item', 'startup-reloaded-products' ),
-		'update_item'                => __( 'Update Item', 'startup-reloaded-products' ),
-		'view_item'                  => __( 'View Item', 'startup-reloaded-products' ),
-		'separate_items_with_commas' => __( 'Separate items with commas', 'startup-reloaded-products' ),
-		'add_or_remove_items'        => __( 'Add or remove items', 'startup-reloaded-products' ),
-		'choose_from_most_used'      => __( 'Choose from the most used', 'startup-reloaded-products' ),
-		'popular_items'              => __( 'Popular Items', 'startup-reloaded-products' ),
-		'search_items'               => __( 'Search Items', 'startup-reloaded-products' ),
-		'not_found'                  => __( 'Not Found', 'startup-reloaded-products' )
+		'name'                       => _x( 'Portfolio Categories', 'Taxonomy General Name', 'startup-cpt-portfolio' ),
+		'singular_name'              => _x( 'Portfolio Category', 'Taxonomy Singular Name', 'startup-cpt-portfolio' ),
+		'menu_name'                  => __( 'Portfolio Categories', 'startup-cpt-portfolio' ),
+		'all_items'                  => __( 'All Items', 'startup-cpt-portfolio' ),
+		'parent_item'                => __( 'Parent Item', 'startup-cpt-portfolio' ),
+		'parent_item_colon'          => __( 'Parent Item:', 'startup-cpt-portfolio' ),
+		'new_item_name'              => __( 'New Item Name', 'startup-cpt-portfolio' ),
+		'add_new_item'               => __( 'Add New Item', 'startup-cpt-portfolio' ),
+		'edit_item'                  => __( 'Edit Item', 'startup-cpt-portfolio' ),
+		'update_item'                => __( 'Update Item', 'startup-cpt-portfolio' ),
+		'view_item'                  => __( 'View Item', 'startup-cpt-portfolio' ),
+		'separate_items_with_commas' => __( 'Separate items with commas', 'startup-cpt-portfolio' ),
+		'add_or_remove_items'        => __( 'Add or remove items', 'startup-cpt-portfolio' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'startup-cpt-portfolio' ),
+		'popular_items'              => __( 'Popular Items', 'startup-cpt-portfolio' ),
+		'search_items'               => __( 'Search Items', 'startup-cpt-portfolio' ),
+		'not_found'                  => __( 'Not Found', 'startup-cpt-portfolio' )
 	);
 	$args = array(
 		'labels'                     => $labels,
@@ -146,5 +146,91 @@ function startup_reloaded_portfolio_categories_metabox_remove() {
     // custom_taxonomy_slugdiv pour les taxonomies type categories
 }
 
-//add_action( 'admin_menu' , 'startup_reloaded_portfolio_categories_metabox_remove' );
+add_action( 'admin_menu' , 'startup_reloaded_portfolio_categories_metabox_remove' );
+
+// Metaboxes
+function startup_reloaded_portfolio_meta() {
+	// Start with an underscore to hide fields from custom fields list
+	$prefix = '_startup_reloaded_portfolio_';
+
+	$cmb_box = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox',
+		'title'         => __( 'Portfolio item details', 'startup-cpt-portfolio' ),
+		'object_types'  => array( 'portfolio' )
+	) );
+    
+    $cmb_box->add_field( array(
+		'name' => __( 'Main picture', 'startup-cpt-portfolio' ),
+		'desc' => __( 'Main image of the portfolio item, may be different from the thumbnail. i.e. 3D model', 'startup-cpt-portfolio' ),
+		'id'   => $prefix . 'main_pic',
+		'type' => 'file',
+        // Optionally hide the text input for the url:
+        'options' => array(
+            'url' => false,
+        ),
+	) );
+    
+    $cmb_box->add_field( array(
+		'name' => __( 'Thumbnail', 'startup-cpt-portfolio' ),
+		'desc' => __( 'The portfolio item picture on your website listings, if different from Main picture.', 'startup-cpt-portfolio' ),
+		'id'   => $prefix . 'thumbnail',
+		'type' => 'file',
+        // Optionally hide the text input for the url:
+        'options' => array(
+            'url' => false,
+        ),
+	) );
+
+	$cmb_box->add_field( array(
+		'name'       => __( 'Short description', 'startup-cpt-portfolio' ),
+		'desc'       => __( 'i.e. "New business building in Montreal"', 'startup-cpt-portfolio' ),
+		'id'         => $prefix . 'short',
+		'type'       => 'text'
+	) );
+    
+    $cmb_box->add_field( array(
+		'name'     => __( 'Categoy', 'startup-cpt-portfolio' ),
+		'desc'     => __( 'Select the category(ies) of the portfolio item', 'startup-cpt-portfolio' ),
+		'id'       => $prefix . 'category',
+		'type'     => 'taxonomy_multicheck',
+		'taxonomy' => 'portfolio-category', // Taxonomy Slug
+		'inline'  => true // Toggles display to inline
+	) );
+    
+    $cmb_box->add_field( array(
+		'name' => __( 'Description', 'startup-cpt-portfolio' ),
+		'desc' => __( 'Full, main description', 'startup-cpt-portfolio' ),
+		'id'   => $prefix . 'description',
+		'type' => 'wysiwyg',
+        'options' => array(
+            'wpautop' => true, // use wpautop?
+            'media_buttons' => false, // show insert/upload button(s)
+            'textarea_rows' => get_option('default_post_edit_rows', 5), // rows="..."
+            'tabindex' => '',
+            'editor_css' => '', // intended for extra styles for both visual and HTML editors buttons, needs to include the `<style>` tags, can use "scoped".
+            'editor_class' => '', // add extra class(es) to the editor textarea
+            'teeny' => false, // output the minimal editor config used in Press This
+            'dfw' => false, // replace the default fullscreen with DFW (needs specific css)
+            'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+            'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
+    ),
+	) );
+    
+    $cmb_box->add_field( array(
+		'name'         => __( 'Gallery', 'startup-cpt-portfolio' ),
+		'desc'         => __( 'Upload or add multiple images for portfolio item photo gallery.', 'startup-cpt-portfolio' ),
+		'id'           => $prefix . 'gallery',
+		'type'         => 'file_list',
+		'preview_size' => array( 100, 100 ) // Default: array( 50, 50 )
+	) );
+    
+    $cmb_box->add_field( array(
+		'name' => __( 'External url', 'startup-cpt-portfolio' ),
+		'desc' => __( 'Link to te portfolio item on an extrenal website.', 'startup-cpt-portfolio' ),
+		'id'   => $prefix . 'url',
+		'type' => 'text_url'
+	) );
+}
+
+add_action( 'cmb2_init', 'startup_reloaded_portfolio_meta' );
 ?>
