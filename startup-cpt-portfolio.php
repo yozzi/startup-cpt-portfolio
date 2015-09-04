@@ -3,8 +3,15 @@
 Plugin Name: StartUp Portfolio
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
-Version: 0.3.0
+Version: 0.4.0
 */
+
+//Charger traduction
+function startup_reloaded_portfolio_translation() {
+  load_plugin_textdomain( 'startup-cpt-portfolio', false, dirname( plugin_basename( __FILE__ ) ) ); 
+}
+
+add_action( 'plugins_loaded', 'startup_reloaded_portfolio_translation' );
 
 //GitHub Plugin Updater
 function startup_reloaded_portfolio_updater() {
@@ -95,4 +102,49 @@ function startup_reloaded_portfolio_caps() {
 }
 
 register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
+
+// Portfolio taxonomy
+function startup_reloaded_portfolio_categories() {
+	$labels = array(
+		'name'                       => _x( 'Portfolio Categories', 'Taxonomy General Name', 'startup-reloaded-products' ),
+		'singular_name'              => _x( 'Portfolio Category', 'Taxonomy Singular Name', 'startup-reloaded-products' ),
+		'menu_name'                  => __( 'Portfolio Categories', 'startup-reloaded-products' ),
+		'all_items'                  => __( 'All Items', 'startup-reloaded-products' ),
+		'parent_item'                => __( 'Parent Item', 'startup-reloaded-products' ),
+		'parent_item_colon'          => __( 'Parent Item:', 'startup-reloaded-products' ),
+		'new_item_name'              => __( 'New Item Name', 'startup-reloaded-products' ),
+		'add_new_item'               => __( 'Add New Item', 'startup-reloaded-products' ),
+		'edit_item'                  => __( 'Edit Item', 'startup-reloaded-products' ),
+		'update_item'                => __( 'Update Item', 'startup-reloaded-products' ),
+		'view_item'                  => __( 'View Item', 'startup-reloaded-products' ),
+		'separate_items_with_commas' => __( 'Separate items with commas', 'startup-reloaded-products' ),
+		'add_or_remove_items'        => __( 'Add or remove items', 'startup-reloaded-products' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'startup-reloaded-products' ),
+		'popular_items'              => __( 'Popular Items', 'startup-reloaded-products' ),
+		'search_items'               => __( 'Search Items', 'startup-reloaded-products' ),
+		'not_found'                  => __( 'Not Found', 'startup-reloaded-products' )
+	);
+	$args = array(
+		'labels'                     => $labels,
+		'hierarchical'               => false,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => false
+	);
+	register_taxonomy( 'portfolio-category', array( 'portfolio' ), $args );
+
+}
+
+add_action( 'init', 'startup_reloaded_portfolio_categories', 0 );
+
+// Retirer la boite de la taxonomie sur le coté
+function startup_reloaded_portfolio_categories_metabox_remove() {
+	remove_meta_box( 'tagsdiv-portfolio-category', 'portfolio', 'side' );
+    // tagsdiv-product_types pour les taxonomies type tags
+    // custom_taxonomy_slugdiv pour les taxonomies type categories
+}
+
+//add_action( 'admin_menu' , 'startup_reloaded_portfolio_categories_metabox_remove' );
 ?>
