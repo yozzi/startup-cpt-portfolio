@@ -70,7 +70,8 @@ function startup_reloaded_portfolio() {
 		'show_in_admin_bar'   => false,
 		'show_in_nav_menus'   => true,
 		'can_export'          => true,
-		'has_archive'         => false,
+		'has_archive'         => true,
+        //'rewrite' => array('slug' => 'lessons', 'with_front' => false), //Je teste ici le conflict archive/page
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
         'capability_type'     => array('portfolio_item','portfolio_items'),
@@ -81,6 +82,14 @@ function startup_reloaded_portfolio() {
 }
 
 add_action( 'init', 'startup_reloaded_portfolio', 0 );
+
+//Flusher les permalink à l'activation du plgin pour qu'ils fonctionnent sans mise à jour manuelle
+function startup_reloaded_portfolio_rewrite_flush() {
+    startup_reloaded_portfolio();
+    flush_rewrite_rules();
+}
+
+register_activation_hook( __FILE__, 'startup_reloaded_portfolio_rewrite_flush' );
 
 // Capabilities
 
