@@ -40,8 +40,8 @@ add_action( 'init', 'startup_reloaded_portfolio_updater' );
 //CPT
 function startup_reloaded_portfolio() {
 	$labels = array(
-		'name'                => _x( 'Portfolio items', 'Post Type General Name', 'text_domain' ),
-		'singular_name'       => _x( 'Portfolio item', 'Post Type Singular Name', 'text_domain' ),
+		'name'                => _x( 'Portfolio', 'Post Type General Name', 'text_domain' ),
+		'singular_name'       => _x( 'Portfolio', 'Post Type Singular Name', 'text_domain' ),
 		'menu_name'           => __( 'Portfolio', 'text_domain' ),
 		'name_admin_bar'      => __( 'Portfolio', 'text_domain' ),
 		'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
