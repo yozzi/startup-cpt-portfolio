@@ -71,7 +71,7 @@ function startup_reloaded_portfolio() {
 		'show_in_nav_menus'   => true,
 		'can_export'          => true,
 		'has_archive'         => true,
-        //'rewrite' => array('slug' => 'lessons', 'with_front' => false), //Je teste ici le conflict archive/page
+        //'rewrite' => array('slug' => 'portfolio-items', 'with_front' => true), //Je teste ici le conflict archive/page
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
         'capability_type'     => array('portfolio_item','portfolio_items'),
