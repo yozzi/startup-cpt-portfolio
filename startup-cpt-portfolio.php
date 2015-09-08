@@ -225,12 +225,25 @@ function startup_reloaded_portfolio_meta() {
     ),
 	) );
     
+//    $cmb_box->add_field( array(
+//		'name'         => __( 'Gallery', 'startup-cpt-portfolio' ),
+//		'desc'         => __( 'Upload or add multiple images for portfolio item photo gallery.', 'startup-cpt-portfolio' ),
+//		'id'           => $prefix . 'gallery',
+//		'type'         => 'file_list',
+//		'preview_size' => array( 100, 100 ) // Default: array( 50, 50 )
+//	) );
+    
     $cmb_box->add_field( array(
-		'name'         => __( 'Gallery', 'startup-cpt-portfolio' ),
-		'desc'         => __( 'Upload or add multiple images for portfolio item photo gallery.', 'startup-cpt-portfolio' ),
-		'id'           => $prefix . 'gallery',
-		'type'         => 'file_list',
-		'preview_size' => array( 100, 100 ) // Default: array( 50, 50 )
+		'name'       => __( 'Client', 'startup-cpt-portfolio' ),
+		'id'         => $prefix . 'client',
+		'type'       => 'text'
+	) );
+    
+    $cmb_box->add_field( array(
+		'name'       => __( 'date', 'startup-cpt-portfolio' ),
+		'id'         => $prefix . 'date',
+		'type'       => 'text_date_timestamp',
+        'date_format' => 'm/Y'
 	) );
     
     $cmb_box->add_field( array(
