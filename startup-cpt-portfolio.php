@@ -254,7 +254,7 @@ function startup_reloaded_portfolio_meta() {
 	) );
 }
 
-add_action( 'cmb2_init', 'startup_reloaded_portfolio_meta' );
+add_action( 'cmb2_admin_init', 'startup_reloaded_portfolio_meta' );
 
 // Shortcode
 add_shortcode( 'portfolio', function( $atts, $content= null ){
