@@ -83,7 +83,7 @@ function startup_reloaded_portfolio() {
 
 add_action( 'init', 'startup_reloaded_portfolio', 0 );
 
-//Flusher les permalink à l'activation du plgin pour qu'ils fonctionnent sans mise à jour manuelle
+//Flusher les permalink à l'activation du plugin pour qu'ils fonctionnent sans mise à jour manuelle
 function startup_reloaded_portfolio_rewrite_flush() {
     startup_reloaded_portfolio();
     flush_rewrite_rules();
@@ -255,4 +255,11 @@ function startup_reloaded_portfolio_meta() {
 }
 
 add_action( 'cmb2_init', 'startup_reloaded_portfolio_meta' );
+
+// Shortcode
+add_shortcode( 'portfolio', function( $atts, $content= null ){
+    ob_start();
+    require get_template_directory() . '/inc/shortcodes/portfolio.php';
+    return ob_get_clean();
+});
 ?>
