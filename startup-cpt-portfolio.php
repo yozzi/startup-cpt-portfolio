@@ -259,7 +259,7 @@ add_action( 'cmb2_admin_init', 'startup_reloaded_portfolio_meta' );
 // Shortcode
 add_shortcode( 'portfolio', function( $atts, $content= null ){
     ob_start();
-    require get_template_directory() . '/inc/shortcodes/portfolio.php';
+    require get_template_directory() . '/template-parts/content-portfolio.php';
     return ob_get_clean();
 });
 ?>
