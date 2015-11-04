@@ -1,17 +1,11 @@
 <?php
 /*
-Plugin Name: StartUp Portfolio
+Plugin Name: StartUp CPT Portfolio
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
 Version: 0.5.0
+Text Domain: startup-cpt-portfolio
 */
-
-//Charger traduction
-function startup_reloaded_portfolio_translation() {
-  load_plugin_textdomain( 'startup-cpt-portfolio', false, dirname( plugin_basename( __FILE__ ) ) ); 
-}
-
-add_action( 'plugins_loaded', 'startup_reloaded_portfolio_translation' );
 
 //GitHub Plugin Updater
 function startup_reloaded_portfolio_updater() {
