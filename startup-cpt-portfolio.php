@@ -251,9 +251,17 @@ function startup_reloaded_portfolio_meta() {
 add_action( 'cmb2_admin_init', 'startup_reloaded_portfolio_meta' );
 
 // Shortcode
-add_shortcode( 'portfolio', function( $atts, $content= null ){
-    ob_start();
-    require get_template_directory() . '/template-parts/content-portfolio.php';
-    return ob_get_clean();
-});
+function startup_reloaded_portfolio_shortcode( $atts ) {
+
+	// Attributes
+    $atts = shortcode_atts(array(
+            'bg' => ''
+        ), $atts);
+    
+	// Code
+        ob_start();
+        require get_template_directory() . '/template-parts/content-portfolio.php';
+        return ob_get_clean();    
+}
+add_shortcode( 'portfolio', 'startup_reloaded_portfolio_shortcode' );
 ?>
