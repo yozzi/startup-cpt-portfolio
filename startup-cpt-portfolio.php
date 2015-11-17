@@ -34,24 +34,24 @@ add_action( 'init', 'startup_reloaded_portfolio_updater' );
 //CPT
 function startup_reloaded_portfolio() {
 	$labels = array(
-		'name'                => _x( 'Portfolio', 'Post Type General Name', 'text_domain' ),
-		'singular_name'       => _x( 'Portfolio', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'           => __( 'Portfolio', 'text_domain' ),
-		'name_admin_bar'      => __( 'Portfolio', 'text_domain' ),
-		'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
-		'all_items'           => __( 'All Items', 'text_domain' ),
-		'add_new_item'        => __( 'Add New Item', 'text_domain' ),
-		'add_new'             => __( 'Add New', 'text_domain' ),
-		'new_item'            => __( 'New Item', 'text_domain' ),
-		'edit_item'           => __( 'Edit Item', 'text_domain' ),
-		'update_item'         => __( 'Update Item', 'text_domain' ),
-		'view_item'           => __( 'View Item', 'text_domain' ),
-		'search_items'        => __( 'Search Item', 'text_domain' ),
-		'not_found'           => __( 'Not found', 'text_domain' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' )
+		'name'                => _x( 'Portfolio', 'Post Type General Name', 'startup-cpt-portfolio' ),
+		'singular_name'       => _x( 'Portfolio', 'Post Type Singular Name', 'startup-cpt-portfolio' ),
+		'menu_name'           => __( 'Portfolio', 'startup-cpt-portfolio' ),
+		'name_admin_bar'      => __( 'Portfolio', 'startup-cpt-portfolio' ),
+		'parent_item_colon'   => __( 'Parent Item:', 'startup-cpt-portfolio' ),
+		'all_items'           => __( 'All Items', 'startup-cpt-portfolio' ),
+		'add_new_item'        => __( 'Add New Item', 'startup-cpt-portfolio' ),
+		'add_new'             => __( 'Add New', 'startup-cpt-portfolio' ),
+		'new_item'            => __( 'New Item', 'startup-cpt-portfolio' ),
+		'edit_item'           => __( 'Edit Item', 'startup-cpt-portfolio' ),
+		'update_item'         => __( 'Update Item', 'startup-cpt-portfolio' ),
+		'view_item'           => __( 'View Item', 'startup-cpt-portfolio' ),
+		'search_items'        => __( 'Search Item', 'startup-cpt-portfolio' ),
+		'not_found'           => __( 'Not found', 'startup-cpt-portfolio' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'startup-cpt-portfolio' )
 	);
 	$args = array(
-		'label'               => __( 'portfolio', 'text_domain' ),
+		'label'               => __( 'portfolio', 'startup-cpt-portfolio' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'revisions' ),
 		//'taxonomies'          => array( 'category', 'post_tag' ),
