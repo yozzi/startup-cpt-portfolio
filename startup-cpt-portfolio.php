@@ -264,4 +264,11 @@ function startup_reloaded_portfolio_shortcode( $atts ) {
         return ob_get_clean();    
 }
 add_shortcode( 'portfolio', 'startup_reloaded_portfolio_shortcode' );
+
+// Enqueue scripts and styles.
+function startup_cpt_portfolio_scripts() {
+    wp_enqueue_style( 'startup-cpt-portfolio-style', plugins_url( '/css/startup-cpt-portfolio.css', __FILE__ ), array( ), false, 'all' );
+}
+
+add_action( 'wp_enqueue_scripts', 'startup_cpt_portfolio_scripts' );
 ?>
