@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 //GitHub Plugin Updater
-function startup_reloaded_portfolio_updater() {
+function startup_cpt_portfolio_updater() {
 	include_once 'lib/updater.php';
 	//define( 'WP_GITHUB_FORCE_UPDATE', true );
 	if ( is_admin() ) {
@@ -34,10 +34,10 @@ function startup_reloaded_portfolio_updater() {
 	}
 }
 
-//add_action( 'init', 'startup_reloaded_portfolio_updater' );
+//add_action( 'init', 'startup_cpt_portfolio_updater' );
 
 //CPT
-function startup_reloaded_portfolio() {
+function startup_cpt_portfolio() {
 	$labels = array(
 		'name'                => _x( 'Portfolio', 'Post Type General Name', 'startup-cpt-portfolio' ),
 		'singular_name'       => _x( 'Portfolio', 'Post Type Singular Name', 'startup-cpt-portfolio' ),
@@ -80,19 +80,19 @@ function startup_reloaded_portfolio() {
 
 }
 
-add_action( 'init', 'startup_reloaded_portfolio', 0 );
+add_action( 'init', 'startup_cpt_portfolio', 0 );
 
 //Flusher les permalink à l'activation du plugin pour qu'ils fonctionnent sans mise à jour manuelle
-function startup_reloaded_portfolio_rewrite_flush() {
-    startup_reloaded_portfolio();
+function startup_cpt_portfolio_rewrite_flush() {
+    startup_cpt_portfolio();
     flush_rewrite_rules();
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_portfolio_rewrite_flush' );
+register_activation_hook( __FILE__, 'startup_cpt_portfolio_rewrite_flush' );
 
 // Capabilities
 
-function startup_reloaded_portfolio_caps() {
+function startup_cpt_portfolio_caps() {
 	$role_admin = get_role( 'administrator' );
 	$role_admin->add_cap( 'edit_portfolio_item' );
 	$role_admin->add_cap( 'read_portfolio_item' );
@@ -109,10 +109,10 @@ function startup_reloaded_portfolio_caps() {
 	$role_admin->add_cap( 'edit_published_portfolio_items' );
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_portfolio_caps' );
+register_activation_hook( __FILE__, 'startup_cpt_portfolio_caps' );
 
 // Portfolio taxonomy
-function startup_reloaded_portfolio_categories() {
+function startup_cpt_portfolio_categories() {
 	$labels = array(
 		'name'                       => _x( 'Portfolio Categories', 'Taxonomy General Name', 'startup-cpt-portfolio' ),
 		'singular_name'              => _x( 'Portfolio Category', 'Taxonomy Singular Name', 'startup-cpt-portfolio' ),
@@ -145,21 +145,21 @@ function startup_reloaded_portfolio_categories() {
 
 }
 
-add_action( 'init', 'startup_reloaded_portfolio_categories', 0 );
+add_action( 'init', 'startup_cpt_portfolio_categories', 0 );
 
 // Retirer la boite de la taxonomie sur le coté
-function startup_reloaded_portfolio_categories_metabox_remove() {
+function startup_cpt_portfolio_categories_metabox_remove() {
 	remove_meta_box( 'tagsdiv-portfolio-category', 'portfolio', 'side' );
     // tagsdiv-product_types pour les taxonomies type tags
     // custom_taxonomy_slugdiv pour les taxonomies type categories
 }
 
-add_action( 'admin_menu' , 'startup_reloaded_portfolio_categories_metabox_remove' );
+add_action( 'admin_menu' , 'startup_cpt_portfolio_categories_metabox_remove' );
 
 // Metaboxes
-function startup_reloaded_portfolio_meta() {
+function startup_cpt_portfolio_meta() {
 	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_startup_reloaded_portfolio_';
+	$prefix = '_startup_cpt_portfolio_';
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
@@ -253,10 +253,10 @@ function startup_reloaded_portfolio_meta() {
 	) );
 }
 
-add_action( 'cmb2_admin_init', 'startup_reloaded_portfolio_meta' );
+add_action( 'cmb2_admin_init', 'startup_cpt_portfolio_meta' );
 
 // Shortcode
-function startup_reloaded_portfolio_shortcode( $atts ) {
+function startup_cpt_portfolio_shortcode( $atts ) {
 
 	// Attributes
     $atts = shortcode_atts(array(
@@ -268,7 +268,49 @@ function startup_reloaded_portfolio_shortcode( $atts ) {
         require get_template_directory() . '/template-parts/content-portfolio.php';
         return ob_get_clean();    
 }
-add_shortcode( 'portfolio', 'startup_reloaded_portfolio_shortcode' );
+add_shortcode( 'portfolio', 'startup_cpt_portfolio_shortcode' );
+
+// Shortcode UI
+/**
+ * Detecion de Shortcake. Identique dans tous les plugins.
+ */
+if ( !function_exists( 'shortcode_ui_detection' ) ) {
+    function shortcode_ui_detection() {
+        if ( !function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+            add_action( 'admin_notices', 'shortcode_ui_notice' );
+        }
+    }
+
+    function shortcode_ui_notice() {
+        if ( current_user_can( 'activate_plugins' ) ) {
+            echo '<div class="error message"><p>Shortcode UI plugin must be active to use fast shortcodes.</p></div>';
+        }
+    }
+
+add_action( 'init', 'shortcode_ui_detection' );
+}
+
+function startup_cpt_portfolio_shortcode_ui() {
+
+    shortcode_ui_register_for_shortcode(
+        'portfolio',
+        array(
+            'label' => esc_html__( 'Portfolio', 'startup-cpt-portfolio' ),
+            'listItemImage' => 'dashicons-art',
+            'attrs' => array(
+                array(
+                    'label' => esc_html__( 'Background', 'startup-cpt-portfolio' ),
+                    'attr'  => 'bg',
+                    'type'  => 'color',
+                ),
+            ),
+        )
+    );
+};
+
+if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+    add_action( 'init', 'startup_cpt_portfolio_shortcode_ui');
+}
 
 // Enqueue scripts and styles.
 function startup_cpt_portfolio_scripts() {
