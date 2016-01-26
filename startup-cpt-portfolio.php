@@ -3,7 +3,7 @@
 Plugin Name: StartUp CPT Portfolio
 Description: Le plugin pour activer le Custom Post Portfolio
 Author: Yann Caplain
-Version: 0.5.0
+Version: 1.0.0
 Text Domain: startup-cpt-portfolio
 Domain Path: /languages
 */
